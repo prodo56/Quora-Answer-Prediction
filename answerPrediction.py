@@ -112,15 +112,7 @@ for index, row in df.iterrows():
 
 
 print vectorised_df
-X = vectorised_df.drop(labels=["question_key"],axis=1)
-X_train, X_test = modelselection.train_test_split(X,test_size=0.2)
-y=X_train["__ans__"]
-X_train = X_train.drop(labels=["__ans__"],axis=1)
-y_test = X_test["__ans__"]
-X_test = X_test.drop(labels=["__ans__"],axis=1)
-model = LR()
-model.fit(X=X_train,y=y)
-print model.predict(X_test)
+
 
 
 
