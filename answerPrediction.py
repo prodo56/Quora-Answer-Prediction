@@ -7,7 +7,6 @@ import string
 from sklearn.linear_model import LogisticRegression as LR
 import sklearn.model_selection as modelselection
 
-
 df = pd.DataFrame(columns=("question_text","context_topic_followers","context_topic_names","topics_followers","topics_name","question_key","__ans__","anonymous"))
 vectorised_df = pd.DataFrame(columns=("question_text","context_topic_followers","context_topic_names","topics_followers","topics_name","question_key","__ans__","anonymous"))
 punctuations = set(string.punctuation)
@@ -20,7 +19,7 @@ def cleanText(sentence):
 
 with open("answered_data_10k.in") as f:
     N = int(f.readline())
-    for i in xrange(30):
+    for i in xrange(10):
         topicFollowers = 0
         topicNames=[]
         record = json.loads(f.readline())
@@ -99,6 +98,7 @@ for text in text_Data:
 model = wv(training_list_word2vec, min_count=1,size=200)
 vocab = list(model.wv.vocab.keys())
 
+print model['colleges']
 print "word2vec training complete!"
 #print df.dtypes
 df.anonymous = df.anonymous.map({True:1,False:0})
@@ -112,15 +112,7 @@ for index, row in df.iterrows():
 
 
 print vectorised_df
-X = vectorised_df.drop(labels=["question_key"],axis=1)
-X_train, X_test = modelselection.train_test_split(X,test_size=0.2)
-y=X_train["__ans__"]
-X_train = X_train.drop(labels=["__ans__"],axis=1)
-y_test = X_test["__ans__"]
-X_test = X_test.drop(labels=["__ans__"],axis=1)
-model = LR()
-model.fit(X=X_train,y=y)
-print model.predict(X_test)
+
 
 
 
